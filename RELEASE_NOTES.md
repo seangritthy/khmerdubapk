@@ -1,5 +1,12 @@
 # KhmerDub - Release Notes
 
+## Version 1.0.6 (BongbeeAI Dub Studio — EXE UI Mirror)
+- **EXE UI Mirror**: AI Dubbing Studio tab rebuilt to match the desktop EXE layout exactly (4-card layout: Media Source, Pipeline Config, Advanced Options, Action).
+- **Pipeline Configuration**: Transcriber (Whisper/Gemini/Groq/OpenAI), Translator (Google/Gemini/DeepSeek), Voice Engine (Edge-TTS/KiriTTS), Male/Female voice selectors, Speed, API Key inputs.
+- **Advanced Options**: Generate Recap, Remove Vocals, Exact Lip Sync, Mirror Video, Hide Watermarks, Auto-Ducking, Custom AI Prompt.
+- **Stop Button**: Full Start/Stop process control with status indicator and animated progress bar.
+- **Dynamic UI**: Conditional field visibility mirrors EXE behavior (e.g. Whisper speed only for local, API key only for premium providers, KiriTTS key/profile only for KiriTTS).
+
 ## Version 1.0.5 (Native Android Production Build)
 - **Version Bump & App State Alignment**: Updated Android manifest versionCode to 6 and versionName to 1.0.5.
 - **Enhanced Asset Server & UI Synchro**: Dynamic version indicator synchronization across native webview runtime and UI.

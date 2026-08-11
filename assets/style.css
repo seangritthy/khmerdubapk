@@ -714,3 +714,258 @@ body {
   cursor: pointer;
 }
 
+/* ── Dubbing Studio EXE-Mirror Styles ────────────────── */
+.dub-header-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: linear-gradient(135deg, rgba(225,29,72,0.15), rgba(139,92,246,0.15));
+  border: 1px solid rgba(225,29,72,0.25);
+  border-radius: 16px;
+  padding: 16px 18px;
+  margin-bottom: 14px;
+}
+.dub-header-icon { font-size: 2rem; }
+.dub-header-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+.dub-header-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.dub-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 16px 16px 18px;
+  margin-bottom: 14px;
+}
+
+.dub-card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.dub-card-num {
+  background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dub-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.dub-file-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dub-outline-btn {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--card-border);
+  color: var(--text-main);
+  padding: 9px 14px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+.dub-outline-btn:hover { background: rgba(255,255,255,0.12); }
+
+.dub-blue-btn {
+  background: linear-gradient(135deg, #0078D4, #106EBE);
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+.dub-blue-btn:hover { opacity: 0.85; }
+
+.dub-config-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.dub-config-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+  min-width: 80px;
+}
+.dub-select {
+  background: var(--input-bg);
+  color: var(--text-main);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 9px 10px;
+  font-size: 0.8rem;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+  min-width: 140px;
+  flex: 1;
+  max-width: 220px;
+}
+.dub-select-sm {
+  min-width: 90px;
+  max-width: 130px;
+  flex: 0 0 auto;
+}
+.dub-input {
+  background: var(--input-bg);
+  color: var(--text-main);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 9px 12px;
+  font-size: 0.8rem;
+  font-family: inherit;
+  outline: none;
+  min-width: 140px;
+}
+.dub-input-sm {
+  min-width: 80px;
+  width: 100px;
+}
+.dub-sm-btn {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--card-border);
+  color: var(--text-main);
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.dub-blue-sm-btn {
+  background: linear-gradient(135deg, #0078D4, #106EBE);
+  color: #fff;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.dub-checks-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 8px;
+}
+.dub-check-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--text-main);
+  cursor: pointer;
+}
+.dub-check-label input[type="checkbox"] {
+  accent-color: var(--primary-accent);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.dub-action-card {
+  text-align: center;
+}
+.dub-action-btns {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.dub-start-btn {
+  background: linear-gradient(135deg, #0078D4, #106EBE);
+  color: #fff;
+  border: none;
+  padding: 14px 36px;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  box-shadow: 0 6px 20px rgba(0,120,212,0.4);
+  transition: opacity 0.2s, transform 0.1s;
+}
+.dub-start-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+.dub-start-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+.dub-stop-btn {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: #fff;
+  border: none;
+  padding: 14px 36px;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(220,53,69,0.3);
+  transition: opacity 0.2s;
+}
+.dub-stop-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.dub-progress-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.dub-progress-track {
+  width: 100%;
+  height: 10px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.dub-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #0078D4, #8B5CF6);
+  border-radius: 6px;
+  transition: width 0.4s ease;
+}
+.dub-status-ready {
+  margin-top: 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0078D4;
+}

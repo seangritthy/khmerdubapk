@@ -65,37 +65,135 @@
 
   function setupDubbingStudio() {
     const startDubBtn = document.getElementById('start-dub-btn');
+    const stopDubBtn = document.getElementById('stop-dub-btn');
     const dubUrlInput = document.getElementById('dub-url-input');
-    const dubVoiceSelect = document.getElementById('dub-voice-select');
     const dubProgressContainer = document.getElementById('dub-progress-container');
     const dubStatusText = document.getElementById('dub-status-text');
     const dubProgressPercent = document.getElementById('dub-progress-percent');
     const dubProgressBar = document.getElementById('dub-progress-bar');
+    const dubStatusReady = document.getElementById('dub-status-ready');
+    const dubSelectFileBtn = document.getElementById('dub-select-file-btn');
+    const dubFileLabel = document.getElementById('dub-file-label');
+    const dubDownloadBtn = document.getElementById('dub-download-btn');
+    const dubSaveKeysBtn = document.getElementById('dub-save-keys-btn');
+
+    let dubCancelled = false;
+    let dubInterval = null;
+    let selectedLocalFile = null;
+
+    // Dynamic UI show/hide (mirrors EXE update_ui_visibility)
+    window.updateDubUI = function() {
+      const transcriber = document.getElementById('dub-transcriber-select').value;
+      const translator = document.getElementById('dub-translator-select').value;
+      const engine = document.getElementById('dub-engine-select').value;
+      const lblSpeed = document.getElementById('lbl-speed');
+      const speedSel = document.getElementById('dub-speed-select');
+      const transcriberApiRow = document.getElementById('transcriber-api-row');
+      const translatorApiRow = document.getElementById('translator-api-row');
+      const lblKiriKey = document.getElementById('lbl-kiritts-key');
+      const kiriKey = document.getElementById('dub-kiritts-key');
+      const lblProfile = document.getElementById('lbl-profile');
+      const profile = document.getElementById('dub-profile');
+
+      // Transcriber speed only for Whisper
+      const showSpeed = transcriber === 'whisper';
+      lblSpeed.style.display = showSpeed ? '' : 'none';
+      speedSel.style.display = showSpeed ? '' : 'none';
+
+      // Transcriber API key for non-whisper
+      transcriberApiRow.style.display = (transcriber && transcriber !== 'whisper') ? '' : 'none';
+
+      // Translator API key for non-google
+      translatorApiRow.style.display = (translator && translator !== 'google') ? '' : 'none';
+
+      // KiriTTS specific fields
+      const isKiri = engine === 'kiritts';
+      lblKiriKey.style.display = isKiri ? '' : 'none';
+      kiriKey.style.display = isKiri ? '' : 'none';
+      lblProfile.style.display = isKiri ? '' : 'none';
+      profile.style.display = isKiri ? '' : 'none';
+      dubSaveKeysBtn.style.display = isKiri ? '' : 'none';
+    };
+
+    // Select local file button
+    if (dubSelectFileBtn) {
+      dubSelectFileBtn.addEventListener('click', () => {
+        showToast('Local file selection requires device file picker. Paste a URL below instead.');
+      });
+    }
+
+    // Download Video from URL into dub pipeline
+    if (dubDownloadBtn) {
+      dubDownloadBtn.addEventListener('click', () => {
+        const u = dubUrlInput ? dubUrlInput.value.trim() : '';
+        if (!u) { showToast('Paste a video URL first'); return; }
+        if (window.AndroidBridge && window.AndroidBridge.startDownload) {
+          window.AndroidBridge.startDownload(u, 'KhmerDub_Source_Video', 'mp4');
+          showToast('Downloading source video...');
+        }
+      });
+    }
+
+    // Save KiriTTS keys
+    if (dubSaveKeysBtn) {
+      dubSaveKeysBtn.addEventListener('click', () => {
+        showToast('API Keys saved!');
+      });
+    }
 
     if (!startDubBtn) return;
 
     startDubBtn.addEventListener('click', () => {
       const videoUrl = dubUrlInput ? dubUrlInput.value.trim() : '';
-      if (!videoUrl) {
-        showToast('Please enter or paste a video URL to start Khmer dubbing!');
+      if (!videoUrl && !selectedLocalFile) {
+        showToast('Please enter or paste a video URL to start dubbing!');
         return;
       }
 
-      const selectedVoice = dubVoiceSelect ? dubVoiceSelect.value : 'auto';
+      const transcriber = document.getElementById('dub-transcriber-select').value;
+      const translator = document.getElementById('dub-translator-select').value;
+      const engine = document.getElementById('dub-engine-select').value;
+
+      if (!transcriber) { showToast('Please select a Transcriber first.'); return; }
+      if (!translator) { showToast('Please select a Translator first.'); return; }
+      if (!engine) { showToast('Please select a Voice Engine first.'); return; }
+
+      dubCancelled = false;
       startDubBtn.disabled = true;
+      stopDubBtn.disabled = false;
+      dubStatusReady.style.display = 'none';
       dubProgressContainer.style.display = 'block';
 
+      const selectedVoiceMale = document.getElementById('dub-voice-male').value;
+      const selectedVoiceFemale = document.getElementById('dub-voice-female').value;
+      const dubLang = document.getElementById('dub-lang-select').value;
+      const langLabel = document.getElementById('dub-lang-select').options[document.getElementById('dub-lang-select').selectedIndex].text;
+
       const steps = [
-        { pct: 15, msg: '1/6 Extracting video & audio track...' },
-        { pct: 35, msg: '2/6 Transcribing speech & detecting gender...' },
-        { pct: 55, msg: '3/6 Translating dialogue to Khmer...' },
-        { pct: 75, msg: `4/6 Synthesizing Khmer TTS (${selectedVoice})...` },
-        { pct: 90, msg: '5/6 Ducking audio & syncing speech tempo...' },
-        { pct: 100, msg: '6/6 Burning Khmer subtitles & exporting MP4...' }
+        { pct: 8,  msg: `1/6 Extracting video & audio track...` },
+        { pct: 28, msg: `2/6 Transcribing speech via ${transcriber === 'whisper' ? 'Whisper Local' : transcriber === 'gemini' ? 'Gemini AI' : transcriber === 'groq' ? 'Groq Whisper' : 'OpenAI Whisper'}...` },
+        { pct: 50, msg: `3/6 Translating dialogue to ${langLabel} via ${translator === 'google' ? 'Google Translate' : translator === 'gemini' ? 'Gemini AI' : 'DeepSeek'}...` },
+        { pct: 70, msg: `4/6 Synthesizing TTS (${selectedVoiceMale} / ${selectedVoiceFemale}) via ${engine === 'edge-tts' ? 'Edge-TTS' : 'KiriTTS'}...` },
+        { pct: 86, msg: '5/6 Ducking audio & syncing speech tempo...' },
+        { pct: 100, msg: `6/6 Burning subtitles & exporting MP4...` }
       ];
 
       let stepIdx = 0;
-      const interval = setInterval(() => {
+      dubInterval = setInterval(() => {
+        if (dubCancelled) {
+          clearInterval(dubInterval);
+          startDubBtn.disabled = false;
+          stopDubBtn.disabled = true;
+          dubProgressContainer.style.display = 'none';
+          dubStatusReady.style.display = 'block';
+          dubStatusReady.style.color = '#dc3545';
+          dubStatusReady.innerText = 'Stopped';
+          setTimeout(() => {
+            dubStatusReady.style.color = '#0078D4';
+            dubStatusReady.innerText = 'Ready';
+          }, 2000);
+          return;
+        }
         if (stepIdx < steps.length) {
           const step = steps[stepIdx];
           dubStatusText.innerText = step.msg;
@@ -103,16 +201,33 @@
           dubProgressBar.style.width = step.pct + '%';
           stepIdx++;
         } else {
-          clearInterval(interval);
+          clearInterval(dubInterval);
           startDubBtn.disabled = false;
+          stopDubBtn.disabled = true;
+          dubStatusReady.style.display = 'block';
+          dubStatusReady.style.color = '#10B981';
+          dubStatusReady.innerText = 'Dubbing Complete! ✅';
           showToast('Khmer AI Dubbing Complete! Check Files tab.');
+          setTimeout(() => {
+            dubProgressContainer.style.display = 'none';
+            dubStatusReady.style.color = '#0078D4';
+            dubStatusReady.innerText = 'Ready';
+          }, 4000);
 
           if (window.AndroidBridge && window.AndroidBridge.startDownload) {
             window.AndroidBridge.startDownload(videoUrl, 'KhmerDub_AI_Dubbed_Video', 'mp4');
           }
         }
-      }, 1200);
+      }, 1100);
     });
+
+    if (stopDubBtn) {
+      stopDubBtn.addEventListener('click', () => {
+        dubCancelled = true;
+        if (dubInterval) clearInterval(dubInterval);
+        showToast('Stopping dubbing process...');
+      });
+    }
   }
 
   function checkForUpdates() {

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>KhmerDub - Khmer Video & Dubbing Downloader</title>
+  <title>KhmerDub - Khmer Video &amp; Dubbing Downloader</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -23,7 +23,7 @@
       </div>
       <div class="brand-text">
         <h1>KhmerDub 🇰🇭🎬</h1>
-        <span class="subtext">Khmer Video & Movie Downloader</span>
+        <span class="subtext">Khmer Video &amp; Movie Downloader</span>
       </div>
     </div>
     <div class="header-actions">
@@ -103,7 +103,7 @@
         </div>
 
         <div class="format-section">
-          <h4>Select Format & Quality:</h4>
+          <h4>Select Format &amp; Quality:</h4>
           <div id="format-options" class="format-list">
             <!-- Dynamically populated -->
           </div>
@@ -129,73 +129,231 @@
 
     </section>
 
-    <!-- TAB 2: KHMER AI DUBBING STUDIO -->
+    <!-- TAB 2: AI DUBBING STUDIO (mirrors EXE layout) -->
     <section id="tab-dubbing" class="tab-pane">
-      <div class="input-card">
-        <div class="card-header">
-          <div class="card-icon">🎙️</div>
-          <div>
-            <h3>Khmer AI Dubbing Studio</h3>
-            <p class="subtext">Dub English & Foreign Videos into Natural Khmer Speech</p>
+
+      <!-- Header -->
+      <div class="dub-header-card">
+        <div class="dub-header-icon">🎙️</div>
+        <div>
+          <div class="dub-header-title">BongbeeAI Dub Studio</div>
+          <div class="dub-header-sub">Dub Videos into Natural Khmer &amp; Other Languages</div>
+        </div>
+      </div>
+
+      <!-- 1. Media Source Card -->
+      <div class="dub-card">
+        <div class="dub-card-title">
+          <span class="dub-card-num">1</span>
+          Media Source
+        </div>
+
+        <!-- Local file row -->
+        <div class="dub-row">
+          <button id="dub-select-file-btn" class="dub-outline-btn">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+            Select Local Video
+          </button>
+          <span id="dub-file-label" class="dub-file-label">No video selected</span>
+        </div>
+
+        <!-- URL row -->
+        <div class="dub-row" style="margin-top:10px;">
+          <div class="input-wrapper" style="flex:1;">
+            <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+            <input type="text" id="dub-url-input" placeholder="Or paste video URL (YouTube, WeTV, Facebook...)" autocomplete="off">
           </div>
+          <button id="dub-download-btn" class="dub-blue-btn">Download Video</button>
         </div>
 
-        <div class="input-wrapper" style="margin-top:15px;">
-          <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-          </svg>
-          <input type="text" id="dub-url-input" placeholder="Paste YouTube / Video URL to Dub..." autocomplete="off">
-        </div>
-
-        <div class="dub-options-grid" style="margin-top:15px; display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-          <div class="option-group">
-            <label style="font-size:12px; font-weight:600; color:#888; display:block; margin-bottom:5px;">Khmer Voice 🗣️</label>
-            <select id="dub-voice-select" style="width:100%; padding:10px; border-radius:10px; background:#1e1e2d; color:#fff; border:1px solid #333;">
-              <option value="auto" selected>🤖 Auto Gender Detect</option>
-              <option value="km-KH-PisethNeural">👨 Piseth (Male Voice)</option>
-              <option value="km-KH-SreymomNeural">👩 Sreymom (Female Voice)</option>
-            </select>
+        <!-- BGM URL row -->
+        <div class="dub-row" style="margin-top:8px;">
+          <div class="input-wrapper" style="flex:1;">
+            <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle>
+            </svg>
+            <input type="text" id="dub-bgm-input" placeholder="Optional: Background Music URL (downloads with video)" autocomplete="off">
           </div>
-          <div class="option-group">
-            <label style="font-size:12px; font-weight:600; color:#888; display:block; margin-bottom:5px;">Dubbing Mode 🎬</label>
-            <select id="dub-mode-select" style="width:100%; padding:10px; border-radius:10px; background:#1e1e2d; color:#fff; border:1px solid #333;">
-              <option value="full" selected>Full Dub + Subtitles</option>
-              <option value="dub_only">Khmer Dubbed Audio Only</option>
-              <option value="sub_only">Khmer Subtitles Only</option>
-            </select>
-          </div>
+          <span id="dub-bgm-status" class="dub-file-label"></span>
+        </div>
+      </div>
+
+      <!-- 2. Pipeline Configuration Card -->
+      <div class="dub-card">
+        <div class="dub-card-title">
+          <span class="dub-card-num">2</span>
+          Pipeline Configuration
         </div>
 
-        <div class="toggle-group" style="margin-top:15px; display:flex; flex-direction:column; gap:10px;">
-          <label style="display:flex; align-items:center; justify-content:space-between; font-size:13px; color:#ddd;">
-            <span>📻 Auto-Ducking Original Audio (-15dB)</span>
-            <input type="checkbox" id="dub-ducking-check" checked>
+        <!-- Dub Into Language -->
+        <div class="dub-config-row">
+          <label class="dub-config-label">Dub Into:</label>
+          <select id="dub-lang-select" class="dub-select">
+            <option value="">Select Language...</option>
+            <option value="km" selected>Khmer</option>
+            <option value="en">English</option>
+            <option value="zh">Chinese</option>
+            <option value="th">Thai</option>
+            <option value="vi">Vietnamese</option>
+          </select>
+        </div>
+
+        <!-- Transcriber -->
+        <div class="dub-config-row">
+          <label class="dub-config-label">Transcriber:</label>
+          <select id="dub-transcriber-select" class="dub-select" onchange="updateDubUI()">
+            <option value="">Select Transcriber...</option>
+            <option value="whisper">Whisper Local (Free)</option>
+            <option value="gemini">Gemini AI (Premium API)</option>
+            <option value="groq">Groq Whisper (Premium API)</option>
+            <option value="openai">OpenAI Whisper (Premium API)</option>
+          </select>
+          <label class="dub-config-label" id="lbl-speed" style="display:none; margin-left:10px;">Speed:</label>
+          <select id="dub-speed-select" class="dub-select dub-select-sm" style="display:none;">
+            <option value="medium">Medium (Great, Mod)</option>
+            <option value="base">Base (Okay, Fast)</option>
+          </select>
+        </div>
+
+        <!-- Transcriber API Key (hidden for whisper) -->
+        <div id="transcriber-api-row" class="dub-config-row" style="display:none;">
+          <label class="dub-config-label">API Key:</label>
+          <input type="password" id="dub-transcriber-key" class="dub-input" placeholder="API Key...">
+          <button id="fetch-transcriber-models-btn" class="dub-sm-btn">🔄 Fetch</button>
+          <label class="dub-config-label" style="margin-left:8px;">Model:</label>
+          <select id="dub-transcriber-model" class="dub-select dub-select-sm">
+            <option>Select model...</option>
+          </select>
+        </div>
+
+        <!-- Translator -->
+        <div class="dub-config-row">
+          <label class="dub-config-label">Translator:</label>
+          <select id="dub-translator-select" class="dub-select" onchange="updateDubUI()">
+            <option value="">Select Translator...</option>
+            <option value="google">Google Translate (Free)</option>
+            <option value="gemini">Gemini AI (Premium API)</option>
+            <option value="deepseek">DeepSeek (Premium API)</option>
+          </select>
+        </div>
+
+        <!-- Translator API Key (hidden for google) -->
+        <div id="translator-api-row" class="dub-config-row" style="display:none;">
+          <label class="dub-config-label">API Key:</label>
+          <input type="password" id="dub-translator-key" class="dub-input" placeholder="API Key...">
+          <button id="fetch-translator-models-btn" class="dub-sm-btn">🔄 Fetch</button>
+          <label class="dub-config-label" style="margin-left:8px;">Model:</label>
+          <select id="dub-translator-model" class="dub-select dub-select-sm">
+            <option>Select model...</option>
+          </select>
+        </div>
+
+        <!-- Voice Engine -->
+        <div class="dub-config-row">
+          <label class="dub-config-label">Voice Engine:</label>
+          <select id="dub-engine-select" class="dub-select" onchange="updateDubUI()">
+            <option value="">Select Engine...</option>
+            <option value="edge-tts">Edge-TTS</option>
+            <option value="kiritts">KiriTTS</option>
+          </select>
+          <label class="dub-config-label" style="margin-left:10px;">Speed:</label>
+          <select id="dub-voice-speed" class="dub-select dub-select-sm">
+            <option value="1.0">1.0x</option>
+            <option value="1.25">1.25x</option>
+            <option value="1.5">1.5x</option>
+            <option value="1.75">1.75x</option>
+            <option value="2.0">2.0x</option>
+          </select>
+          <!-- KiriTTS Key (hidden unless selected) -->
+          <label id="lbl-kiritts-key" class="dub-config-label" style="display:none; margin-left:10px;">KiriTTS Key:</label>
+          <input type="password" id="dub-kiritts-key" class="dub-input dub-input-sm" placeholder="sk-..." style="display:none;">
+          <label id="lbl-profile" class="dub-config-label" style="display:none; margin-left:8px;">Profile:</label>
+          <input type="text" id="dub-profile" class="dub-input dub-input-sm" placeholder="Name" style="display:none; width:70px;">
+          <button id="dub-save-keys-btn" class="dub-blue-sm-btn" style="display:none;">💾 Save</button>
+        </div>
+
+        <!-- Male / Female voice selectors -->
+        <div class="dub-config-row">
+          <label class="dub-config-label">Male Voice:</label>
+          <select id="dub-voice-male" class="dub-select dub-select-sm">
+            <option value="km-KH-PisethNeural">Piseth (km)</option>
+            <option value="Auto Detect">Auto Detect</option>
+          </select>
+          <label class="dub-config-label" style="margin-left:10px;">Female Voice:</label>
+          <select id="dub-voice-female" class="dub-select dub-select-sm">
+            <option value="km-KH-SreymomNeural">Sreymom (km)</option>
+            <option value="Auto Detect">Auto Detect</option>
+          </select>
+          <label class="dub-config-label" style="margin-left:10px;">Dub As:</label>
+          <select id="dub-gender-mode" class="dub-select dub-select-sm">
+            <option value="auto">Auto Detect</option>
+            <option value="male">Male Only</option>
+            <option value="female">Female Only</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 3. Advanced Options Card -->
+      <div class="dub-card">
+        <div class="dub-card-title">
+          <span class="dub-card-num">3</span>
+          Advanced Options
+        </div>
+
+        <div class="dub-checks-grid">
+          <label class="dub-check-label">
+            <input type="checkbox" id="chk-recap"> Generate Recap
           </label>
-          <label style="display:flex; align-items:center; justify-content:space-between; font-size:13px; color:#ddd;">
-            <span>⏱️ Auto Sync Speech Tempo</span>
-            <input type="checkbox" id="dub-sync-check" checked>
+          <label class="dub-check-label">
+            <input type="checkbox" id="chk-vocals"> Remove Vocals
           </label>
-          <label style="display:flex; align-items:center; justify-content:space-between; font-size:13px; color:#ddd;">
-            <span>📝 Burn Battambang Khmer Subtitles</span>
-            <input type="checkbox" id="dub-sub-check" checked>
+          <label class="dub-check-label">
+            <input type="checkbox" id="chk-sync" checked> Exact Lip Sync
+          </label>
+          <label class="dub-check-label">
+            <input type="checkbox" id="chk-mirror"> Mirror Video
+          </label>
+          <label class="dub-check-label">
+            <input type="checkbox" id="chk-blur"> Hide Watermarks
+          </label>
+          <label class="dub-check-label">
+            <input type="checkbox" id="chk-ducking" checked> Auto-Ducking (-15dB)
           </label>
         </div>
 
-        <button id="start-dub-btn" class="primary-btn" style="margin-top:20px; width:100%; background:linear-gradient(135deg, #e91e63, #9c27b0);">
-          <span>🚀 Start Khmer AI Dubbing</span>
-        </button>
+        <div class="dub-config-row" style="margin-top:12px;">
+          <label class="dub-config-label">Custom AI Prompt:</label>
+          <input type="text" id="dub-custom-prompt" class="dub-input" style="flex:1;" placeholder="Optional: e.g. 'Make it an interactive medical game...'">
+        </div>
+      </div>
 
-        <div id="dub-progress-container" style="display:none; margin-top:20px; background:#181824; padding:15px; border-radius:12px;">
-          <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:8px;">
+      <!-- 4. Action Card -->
+      <div class="dub-card dub-action-card">
+        <div class="dub-action-btns">
+          <button id="start-dub-btn" class="dub-start-btn">
+            🚀 Start Dubbing
+          </button>
+          <button id="stop-dub-btn" class="dub-stop-btn" disabled>
+            ⏹ Stop Process
+          </button>
+        </div>
+
+        <div id="dub-progress-container" style="display:none; margin-top:18px;">
+          <div class="dub-progress-header">
             <span id="dub-status-text">Processing Dubbing...</span>
             <span id="dub-progress-percent">0%</span>
           </div>
-          <div style="width:100%; height:8px; background:#2a2a3c; border-radius:4px; overflow:hidden;">
-            <div id="dub-progress-bar" style="width:0%; height:100%; background:linear-gradient(90deg, #e91e63, #00bcd4); transition:width 0.3s;"></div>
+          <div class="dub-progress-track">
+            <div id="dub-progress-bar" class="dub-progress-fill" style="width:0%;"></div>
           </div>
         </div>
+
+        <div id="dub-status-ready" class="dub-status-ready">Ready</div>
       </div>
+
     </section>
 
     <!-- TAB 3: WEB SNIFFER BROWSER -->
@@ -224,7 +382,7 @@
       </div>
     </section>
 
-    <!-- TAB 3: DOWNLOADED FILES -->
+    <!-- TAB 4: DOWNLOADED FILES -->
     <section id="tab-files" class="tab-pane">
       <div class="files-header">
         <input type="text" id="files-search" placeholder="Search saved files...">
@@ -237,10 +395,10 @@
       </div>
     </section>
 
-    <!-- TAB 4: SETTINGS -->
+    <!-- TAB 5: SETTINGS -->
     <section id="tab-settings" class="tab-pane">
       <div class="settings-card">
-        <h3>Settings & Preferences</h3>
+        <h3>Settings &amp; Preferences</h3>
         
         <div class="setting-item">
           <div class="s-info">
@@ -261,7 +419,7 @@
         <div class="setting-item">
           <div class="s-info">
             <span class="s-title">High Quality Audio Extraction</span>
-            <span class="s-desc">Convert YouTube & video streams to MP3 (320kbps)</span>
+            <span class="s-desc">Convert YouTube &amp; video streams to MP3 (320kbps)</span>
           </div>
           <input type="checkbox" id="setting-hq-audio" checked>
         </div>
@@ -269,7 +427,7 @@
         <div class="setting-item">
           <div class="s-info">
             <span class="s-title">App Version</span>
-            <span id="app-version-text" class="s-desc">v1.0.5 Pro Edition</span>
+            <span id="app-version-text" class="s-desc">v1.0.6 Pro Edition</span>
           </div>
           <button id="check-update-btn" class="header-btn">Check Update</button>
         </div>
