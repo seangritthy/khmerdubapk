@@ -1,5 +1,10 @@
 # KhmerDub - Release Notes
 
+## Version 1.0.4 (Dedicated Repo Release)
+- **Repository Remote Alignment**: Verified and locked release pipeline to `https://github.com/seangritthy/khmerdubapk.git`.
+- **Khmer AI Dubbing Engine**: Optimized TTS voice switching (`Piseth` & `Sreymom`), audio ducking (-15dB), and subtitle renderer.
+- **Production Build Artifacts**: Clean release build output (`khmerdubapk-v1.0.4.apk` & `khmerdubapk.apk`) generated in `khmerdubapk`.
+
 ## Version 1.0.3 (Clean Production Release)
 - **Clean Repository Release**: Removed all obsolete legacy APK artifacts from release directory.
 - **Khmer AI Dubbing Engine Optimization**: Faster voice synthesis routing and smoother ducking transition (-15dB).
