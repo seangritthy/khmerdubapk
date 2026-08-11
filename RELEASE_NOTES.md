@@ -1,5 +1,10 @@
 # KhmerDub - Release Notes
 
+## Version 1.0.5 (Native Android Production Build)
+- **Version Bump & App State Alignment**: Updated Android manifest versionCode to 6 and versionName to 1.0.5.
+- **Enhanced Asset Server & UI Synchro**: Dynamic version indicator synchronization across native webview runtime and UI.
+- **Production Build Artifacts**: Clean release build output (`khmerdubapk-v1.0.5.apk` & `khmerdubapk.apk`) generated in `khmerdubapk`.
+
 ## Version 1.0.4 (Dedicated Repo Release)
 - **Repository Remote Alignment**: Verified and locked release pipeline to `https://github.com/seangritthy/khmerdubapk.git`.
 - **Khmer AI Dubbing Engine**: Optimized TTS voice switching (`Piseth` & `Sreymom`), audio ducking (-15dB), and subtitle renderer.
