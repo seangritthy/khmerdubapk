@@ -1,4 +1,4 @@
-package com.khmerdub.app;
+package com.khmerdubapk.app;
 
 import android.Manifest;
 import android.app.Activity;

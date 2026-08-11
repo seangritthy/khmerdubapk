@@ -68,7 +68,7 @@
       checkUpdateBtn.innerText = "Checking...";
     }
 
-    fetch('https://api.github.com/repos/seangritthy/KhmerDub/releases/latest')
+    fetch('https://api.github.com/repos/seangritthy/khmerdubapk/releases/latest')
       .then(res => res.json())
       .then(data => {
         if (checkUpdateBtn) {
@@ -82,19 +82,19 @@
           
           if (!curVersion.includes(latestTag)) {
             let apkAsset = data.assets ? data.assets.find(a => a.name.endsWith('.apk')) : null;
-            let downloadUrl = apkAsset ? apkAsset.browser_download_url : `https://github.com/seangritthy/KhmerDub/releases/download/${latestTag}/KhmerDub.apk`;
+            let downloadUrl = apkAsset ? apkAsset.browser_download_url : `https://github.com/seangritthy/khmerdubapk/releases/download/${latestTag}/khmerdubapk.apk`;
 
-            if (confirm(`New Update Available (${latestTag})!\n\nWould you like to download and install KhmerDub Pro ${latestTag} now?`)) {
+            if (confirm(`New Update Available (${latestTag})!\n\nWould you like to download and install KhmerDub APK ${latestTag} now?`)) {
               if (window.AndroidBridge && window.AndroidBridge.startDownload) {
                 showToast("Downloading update installer...");
                 window.AndroidBridge.startDownload(downloadUrl, `KhmerDub_Update_${latestTag}`, "apk");
               }
             }
           } else {
-            showToast("You are using the latest version of KhmerDub Pro (" + latestTag + ")!");
+            showToast("You are using the latest version of KhmerDub APK (" + latestTag + ")!");
           }
         } else {
-          showToast("Latest version of KhmerDub Pro is installed!");
+          showToast("Latest version of KhmerDub APK is installed!");
         }
       })
       .catch(() => {
@@ -102,7 +102,7 @@
           checkUpdateBtn.disabled = false;
           checkUpdateBtn.innerText = "Check Update";
         }
-        showToast("Checked: Latest version of KhmerDub Pro installed!");
+        showToast("Checked: Latest version of KhmerDub APK installed!");
       });
   }
 

@@ -1,4 +1,4 @@
-package com.khmerdub.app;
+package com.khmerdubapk.app;
 
 import android.content.Context;
 import android.content.Intent;
@@ -282,7 +282,7 @@ public class DownloadService {
                 return;
             }
 
-            Uri contentUri = Uri.parse("content://com.khmerdub.app.fileprovider" + file.getAbsolutePath());
+            Uri contentUri = Uri.parse("content://com.khmerdubapk.app.fileprovider" + file.getAbsolutePath());
             String mimeType = file.getName().toLowerCase().endsWith(".mp3") ? "audio/*" : "video/*";
 
             Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -305,7 +305,7 @@ public class DownloadService {
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                 if (!context.getPackageManager().canRequestPackageInstalls()) {
-                    Toast.makeText(context, "Please enable unknown app sources permission for KhmerDub Pro", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Please enable unknown app sources permission for KhmerDub APK", Toast.LENGTH_LONG).show();
                     Intent settingsIntent = new Intent(android.provider.Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES);
                     settingsIntent.setData(Uri.parse("package:" + context.getPackageName()));
                     settingsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -314,7 +314,7 @@ public class DownloadService {
                 }
             }
 
-            Uri apkUri = Uri.parse("content://com.khmerdub.app.fileprovider" + file.getAbsolutePath());
+            Uri apkUri = Uri.parse("content://com.khmerdubapk.app.fileprovider" + file.getAbsolutePath());
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_ACTIVITY_NEW_TASK);

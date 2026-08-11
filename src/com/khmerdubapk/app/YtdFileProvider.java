@@ -1,4 +1,4 @@
-package com.khmerdub.app;
+package com.khmerdubapk.app;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;

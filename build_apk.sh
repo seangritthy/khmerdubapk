@@ -4,7 +4,7 @@ set -e
 APP_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$APP_DIR"
 
-echo "=== Building KhmerDub Native Android APK ==="
+echo "=== Building KhmerDub APK Native Android App ==="
 
 rm -rf build
 mkdir -p build/gen build/obj build/bin libs
@@ -64,11 +64,11 @@ apksigner sign \
     --ks debug.keystore \
     --ks-pass pass:android \
     --key-pass pass:android \
-    --out KhmerDub.apk \
+    --out khmerdubapk.apk \
     build/app-aligned.apk
 
-cp KhmerDub.apk KhmerDub-v1.0.0.apk
+cp khmerdubapk.apk khmerdubapk-v1.0.0.apk
 
 echo "=== BUILD SUCCESSFUL ==="
-echo "APK Output Path: $APP_DIR/KhmerDub.apk"
-ls -lh KhmerDub.apk KhmerDub-v1.0.0.apk
+echo "APK Output Path: $APP_DIR/khmerdubapk.apk"
+ls -lh khmerdubapk.apk khmerdubapk-v1.0.0.apk
