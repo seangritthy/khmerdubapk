@@ -714,3 +714,139 @@ body {
   cursor: pointer;
 }
 
+/* Khmer Dubbing Studio Styles */
+.studio-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.card-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(225, 29, 72, 0.2), rgba(139, 92, 246, 0.2));
+  border: 1px solid var(--primary-accent);
+  color: var(--text-main);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.studio-card h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  font-family: 'Battambang', 'Outfit', sans-serif;
+}
+
+.card-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 14px;
+  margin: 16px 0;
+}
+
+.opt-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.opt-group label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.custom-select {
+  background: var(--input-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text-main);
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.slider-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--input-bg);
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--card-border);
+}
+
+.slider-wrapper input[type="range"] {
+  flex: 1;
+  accent-color: var(--primary-accent);
+}
+
+.slider-badge {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--primary-accent);
+  min-width: 45px;
+  text-align: right;
+}
+
+.toggles-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.toggle-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.toggle-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary-accent);
+}
+
+.toggle-label {
+  font-size: 0.85rem;
+  color: var(--text-main);
+}
+
+.dub-btn {
+  width: 100%;
+  margin-top: 10px;
+  background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
+  padding: 14px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 12px;
+  border: none;
+  color: #FFF;
+  cursor: pointer;
+}
+
+.progress-panel {
+  border-color: var(--primary-accent);
+}
+
+.dub-status-text {
+  font-size: 0.85rem;
+  color: var(--text-main);
+  margin-top: 10px;
+  font-weight: 500;
+}
+

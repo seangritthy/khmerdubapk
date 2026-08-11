@@ -41,6 +41,7 @@
     setupTabNavigation();
     setupInputEvents();
     setupPlatformCards();
+    setupDubbingEvents();
     loadFilesList();
 
     // Sync version from AndroidBridge
