@@ -213,14 +213,53 @@ public class VideoExtractor {
 
         if (!TextUtils.isEmpty(videoId)) {
             item.thumbnail = "https://img.youtube.com/vi/" + videoId + "/hqdefault.jpg";
-            // Get OEmbed metadata for video title
             try {
-                String oembedUrl = "https://www.youtube.com/oembed?url=" + inputUrl + "&format=json";
-                String jsonStr = fetchUrlContent(oembedUrl, null);
+                String playerApiUrl = "https://www.youtube.com/youtubei/v1/player";
+                String reqJson = "{\"videoId\":\"" + videoId + "\",\"context\":{\"client\":{\"clientName\":\"ANDROID_VR\",\"clientVersion\":\"1.59.19\"}}}";
+                String jsonStr = postJsonUrlContent(playerApiUrl, reqJson);
                 if (!TextUtils.isEmpty(jsonStr)) {
                     JSONObject obj = new JSONObject(jsonStr);
-                    if (obj.has("title")) {
-                        item.title = obj.getString("title");
+                    if (obj.has("videoDetails")) {
+                        JSONObject details = obj.getJSONObject("videoDetails");
+                        if (details.has("title")) item.title = details.getString("title");
+                        if (details.has("thumbnail")) {
+                            JSONArray thumbs = details.getJSONObject("thumbnail").optJSONArray("thumbnails");
+                            if (thumbs != null && thumbs.length() > 0) {
+                                item.thumbnail = thumbs.getJSONObject(thumbs.length() - 1).optString("url", item.thumbnail);
+                            }
+                        }
+                    }
+                    if (obj.has("streamingData")) {
+                        JSONObject streamData = obj.getJSONObject("streamingData");
+                        if (streamData.has("formats")) {
+                            JSONArray fmts = streamData.getJSONArray("formats");
+                            for (int i = 0; i < fmts.length(); i++) {
+                                JSONObject f = fmts.getJSONObject(i);
+                                if (f.has("url")) {
+                                    String directUrl = f.getString("url");
+                                    int height = f.optInt("height", 720);
+                                    String mime = f.optString("mimeType", "video/mp4");
+                                    String ext = mime.contains("webm") ? "webm" : "mp4";
+                                    long size = f.optLong("contentLength", 0);
+                                    String sizeStr = size > 0 ? String.format("%.1f MB", size / (1024.0 * 1024.0)) : "Auto";
+                                    item.formats.add(new FormatOption(height + "p HD Stream (" + ext.toUpperCase() + ")", directUrl, inputUrl, ext, sizeStr));
+                                }
+                            }
+                        }
+                        if (streamData.has("adaptiveFormats")) {
+                            JSONArray afmts = streamData.getJSONArray("adaptiveFormats");
+                            for (int i = 0; i < afmts.length(); i++) {
+                                JSONObject f = afmts.getJSONObject(i);
+                                String mime = f.optString("mimeType", "");
+                                if (mime.startsWith("audio/") && f.has("url")) {
+                                    String audioUrl = f.getString("url");
+                                    long size = f.optLong("contentLength", 0);
+                                    String sizeStr = size > 0 ? String.format("%.1f MB", size / (1024.0 * 1024.0)) : "Audio";
+                                    item.formats.add(new FormatOption("MP3 High Quality Audio Stream", audioUrl, inputUrl, "mp3", sizeStr));
+                                    break;
+                                }
+                            }
+                        }
                     }
                 }
             } catch (Exception e) {
@@ -230,13 +269,9 @@ public class VideoExtractor {
             if (TextUtils.isEmpty(item.title)) {
                 item.title = "YouTube Video (" + videoId + ")";
             }
+        }
 
-            // Generate direct stream format options
-            item.formats.add(new FormatOption("720p HD (MP4)", inputUrl, "mp4", "HD"));
-            item.formats.add(new FormatOption("480p SD (MP4)", inputUrl, "mp4", "SD"));
-            item.formats.add(new FormatOption("MP3 Audio Only", inputUrl, "mp3", "Audio"));
-        } else {
-            item.title = "YouTube Video";
+        if (item.formats == null || item.formats.isEmpty()) {
             item.formats.add(new FormatOption("720p HD Stream (MP4)", inputUrl, "mp4", "HD"));
             item.formats.add(new FormatOption("MP3 Audio Stream", inputUrl, "mp3", "Audio"));
         }
@@ -439,6 +474,36 @@ public class VideoExtractor {
                 if (sb.length() > 500000) break;
             }
             reader.close();
+            conn.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sb.toString();
+    }
+
+    private static String postJsonUrlContent(String urlStr, String jsonBody) {
+        StringBuilder sb = new StringBuilder();
+        try {
+            URL url = new URL(urlStr);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setConnectTimeout(8000);
+            conn.setReadTimeout(8000);
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("User-Agent", "com.google.android.apps.youtube.vr/1.59.19 (Linux; U; Android 14)");
+            conn.setDoOutput(true);
+            try (java.io.OutputStream os = conn.getOutputStream()) {
+                os.write(jsonBody.getBytes("UTF-8"));
+                os.flush();
+            }
+
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line).append("\n");
+                    if (sb.length() > 2000000) break;
+                }
+            }
             conn.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
