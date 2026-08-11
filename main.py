@@ -14,9 +14,9 @@ from flask import Flask, request, jsonify, send_from_directory
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-ASSETS_DIR = os.path.join(BASE_DIR, 'webui')
+ASSETS_DIR = os.path.join(BASE_DIR, 'assets')
 DOWNLOAD_DIR = '/sdcard/Download/KhmerDub'
-TEMP_DIR = '/sdcard/Android/data/com.khmerdub.app/files/temp'
+TEMP_DIR = os.path.join(os.path.expanduser('~'), '.khmerdub_temp')
 FFMPEG_BIN = os.path.join(BASE_DIR, 'bin', 'ffmpeg')
 
 os.makedirs(DOWNLOAD_DIR, exist_ok=True)
