@@ -27,8 +27,8 @@ android.ndk = 29.0.14206865
 android.ndk_api = 21
 android.archs = arm64-v8a
 android.accept_sdk_license = True
-android.sdk_path = /data/data/com.termux/files/home/android-sdk
-android.ndk_path = /data/data/com.termux/files/home/android-sdk/ndk/29.0.14206865
+# android.sdk_path = /data/data/com.termux/files/home/android-sdk
+# android.ndk_path = /data/data/com.termux/files/home/android-sdk/ndk/29.0.14206865
 
 # pip packages installed via p4a pip bootstrap:
 android.add_pip_packages = yt-dlp,edge-tts,pydub,deep-translator,aiohttp,aiofiles,certifi,charset-normalizer,urllib3,idna,mutagen
