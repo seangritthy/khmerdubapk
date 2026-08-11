@@ -68,8 +68,8 @@ apksigner sign \
     build/app-aligned.apk
 
 rm -f khmerdubapk-v*.apk
-cp khmerdubapk.apk khmerdubapk-v1.0.6.apk
+cp khmerdubapk.apk khmerdubapk-v1.0.7.apk
 
 echo "=== BUILD SUCCESSFUL ==="
 echo "APK Output Path: $APP_DIR/khmerdubapk.apk"
-ls -lh khmerdubapk.apk khmerdubapk-v1.0.6.apk
+ls -lh khmerdubapk.apk khmerdubapk-v1.0.7.apk

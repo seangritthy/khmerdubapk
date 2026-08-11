@@ -1,5 +1,10 @@
 # KhmerDub - Release Notes
 
+## Version 1.0.7 (Hybrid Local & Cloud AI Dubbing Engine)
+- **Local API Backend Integration**: Native HTTP client-server architecture communicating with local Python backend (`main.py`) on `127.0.0.1:5000`.
+- **Real AI Processing**: Live video stream extraction, multi-model transcription (Whisper/Gemini/Groq/OpenAI), Khmer translation, Edge-TTS/KiriTTS speech synthesis, and FFmpeg audio ducking (-15dB).
+- **Production Build Artifacts**: Clean release build output (`khmerdubapk-v1.0.7.apk` & `khmerdubapk.apk`) generated in `khmerdubapk`.
+
 ## Version 1.0.6 (BongbeeAI Dub Studio — EXE UI Mirror)
 - **EXE UI Mirror**: AI Dubbing Studio tab rebuilt to match the desktop EXE layout exactly (4-card layout: Media Source, Pipeline Config, Advanced Options, Action).
 - **Pipeline Configuration**: Transcriber (Whisper/Gemini/Groq/OpenAI), Translator (Google/Gemini/DeepSeek), Voice Engine (Edge-TTS/KiriTTS), Male/Female voice selectors, Speed, API Key inputs.
