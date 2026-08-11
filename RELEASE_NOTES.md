@@ -1,5 +1,9 @@
 # KhmerDub - Release Notes
 
+## Version 1.0.1
+- **AI Voice Dubbing Studio**: Full mobile dubbing studio UI with Edge TTS voices (km-KH-PisethNeural, km-KH-SreymomNeural), Radio DJ Ducking controls, and Battambang font subtitles.
+- **Enhanced In-App Updater**: Automatic GitHub Release CDN checker with 1-click update installation.
+
 ## Version 1.0.0 (Initial Release)
 - **Native Android KhmerDub App**: High-speed multi-platform video & Khmer dubbed movie downloader for YouTube, Facebook, TikTok, WeTV, iQIYI, and generic web streams.
 - **In-App Media Player**: Built-in player with HTML5 localfile stream interceptor and external player URI intent delegate.
