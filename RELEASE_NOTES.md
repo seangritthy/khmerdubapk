@@ -1,5 +1,10 @@
 # KhmerDub - Release Notes
 
+## Version 1.0.8 (Direct InnerTube Stream Resolver Edition)
+- **Direct YouTube Stream Resolution**: Integrated YouTube InnerTube API (`ANDROID_VR` client) into `VideoExtractor.java` for unencrypted `.googlevideo.com` `.mp4` and `.mp3` stream extraction natively on any Android phone.
+- **Enhanced Native Standalone Mode**: Fixed 40KB web page download issue; native Java engine now resolves and downloads real multi-megabyte video streams without external backends.
+- **Production Build Artifacts**: Clean release build output (`khmerdubapk-v1.0.8.apk` & `khmerdubapk.apk`) generated in `khmerdubapk`.
+
 ## Version 1.0.7 (Hybrid Local & Cloud AI Dubbing Engine)
 - **Local API Backend Integration**: Native HTTP client-server architecture communicating with local Python backend (`main.py`) on `127.0.0.1:5000`.
 - **Real AI Processing**: Live video stream extraction, multi-model transcription (Whisper/Gemini/Groq/OpenAI), Khmer translation, Edge-TTS/KiriTTS speech synthesis, and FFmpeg audio ducking (-15dB).

@@ -7,7 +7,7 @@ source.dir = .
 source.include_exts = py,png,jpg,kv,json,html,js,css,ttf,sh,xml
 source.exclude_dirs = build, bin, __pycache__, .git, libs, obj, res
 
-version = 1.0.7
+version = 1.0.8
 
 # p4a has recipes for: python3, flask, openssl, sqlite3
 # Pure Python packages (no recipe needed) go via pip:

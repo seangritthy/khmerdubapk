@@ -47,7 +47,7 @@ def static_files(path):
 
 @app.route('/api/version')
 def api_version():
-    return jsonify({'version': '1.0.7', 'edition': 'Standalone Pro'})
+    return jsonify({'version': '1.0.8', 'edition': 'Standalone Pro'})
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # /api/parse   POST {url}  → video info + format list
