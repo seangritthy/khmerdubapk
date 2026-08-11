@@ -149,12 +149,18 @@
         </div>
 
         <!-- Local file row -->
+        <input type="file" id="dub-file-input" accept="video/*" style="display:none;">
         <div class="dub-row">
           <button id="dub-select-file-btn" class="dub-outline-btn">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-            Select Local Video
+            📁 Select Video File
           </button>
           <span id="dub-file-label" class="dub-file-label">No video selected</span>
+        </div>
+
+        <!-- Video Preview Container -->
+        <div id="dub-video-preview-card" style="display:none; margin-top:12px; border-radius:12px; overflow:hidden; background:#000;">
+          <video id="dub-video-player" controls style="width:100%; max-height:220px; display:block;"></video>
         </div>
 
         <!-- URL row -->

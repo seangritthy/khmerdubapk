@@ -258,10 +258,31 @@
     const dubProgressBar = document.getElementById('dub-progress-bar');
     const dubStatusReady = document.getElementById('dub-status-ready');
     const dubDownloadBtn = document.getElementById('dub-download-btn');
-    const dubSaveKeysBtn = document.getElementById('dub-save-keys-btn');
+    const dubSelectFileBtn = document.getElementById('dub-select-file-btn');
+    const dubFileInput = document.getElementById('dub-file-input');
+    const dubFileLabel = document.getElementById('dub-file-label');
+    const dubVideoPreviewCard = document.getElementById('dub-video-preview-card');
+    const dubVideoPlayer = document.getElementById('dub-video-player');
 
     let activeJobId = null;
     let pollIv = null;
+
+    if (dubSelectFileBtn && dubFileInput) {
+      dubSelectFileBtn.addEventListener('click', () => {
+        dubFileInput.click();
+      });
+
+      dubFileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          dubFileLabel.innerText = file.name;
+          const objectUrl = URL.createObjectURL(file);
+          dubVideoPlayer.src = objectUrl;
+          dubVideoPreviewCard.style.display = 'block';
+          showToast('Selected video: ' + file.name);
+        }
+      });
+    }
 
     window.updateDubUI = function() {
       const transcriber = document.getElementById('dub-transcriber-select').value;
