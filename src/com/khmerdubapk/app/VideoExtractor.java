@@ -213,30 +213,73 @@ public class VideoExtractor {
 
         if (!TextUtils.isEmpty(videoId)) {
             item.thumbnail = "https://img.youtube.com/vi/" + videoId + "/hqdefault.jpg";
-            // Get OEmbed metadata for video title
+            
+            // Query public Invidious API for direct playable/downloadable stream URLs
             try {
-                String oembedUrl = "https://www.youtube.com/oembed?url=" + inputUrl + "&format=json";
-                String jsonStr = fetchUrlContent(oembedUrl, null);
-                if (!TextUtils.isEmpty(jsonStr)) {
-                    JSONObject obj = new JSONObject(jsonStr);
-                    if (obj.has("title")) {
-                        item.title = obj.getString("title");
+                String[] invInstances = new String[]{
+                    "https://inv.tux.pizza/api/v1/videos/",
+                    "https://invidious.nerdvpn.de/api/v1/videos/",
+                    "https://invidious.projectsegfau.lt/api/v1/videos/",
+                    "https://invidious.drgns.space/api/v1/videos/"
+                };
+                
+                for (String inst : invInstances) {
+                    try {
+                        String jsonStr = fetchUrlContent(inst + videoId, "Mozilla/5.0 (Linux; Android 10; Mobile)");
+                        if (!TextUtils.isEmpty(jsonStr) && jsonStr.startsWith("{")) {
+                            JSONObject obj = new JSONObject(jsonStr);
+                            if (obj.has("title")) {
+                                item.title = obj.getString("title");
+                            }
+                            if (obj.has("videoStreams")) {
+                                JSONArray vStreams = obj.getJSONArray("videoStreams");
+                                for (int i = 0; i < vStreams.length(); i++) {
+                                    JSONObject stream = vStreams.getJSONObject(i);
+                                    String streamUrl = stream.optString("url");
+                                    String quality = stream.optString("quality", "720p");
+                                    String format = stream.optString("format", "mp4");
+                                    if (!TextUtils.isEmpty(streamUrl) && ("mp4".equalsIgnoreCase(format) || streamUrl.contains(".mp4") || streamUrl.contains("googlevideo.com"))) {
+                                        item.formats.add(new FormatOption(quality + " Direct MP4", streamUrl, inputUrl, "mp4", quality));
+                                    }
+                                }
+                            }
+                            if (obj.has("audioStreams")) {
+                                JSONArray aStreams = obj.getJSONArray("audioStreams");
+                                if (aStreams.length() > 0) {
+                                    JSONObject aStream = aStreams.getJSONObject(0);
+                                    String audioUrl = aStream.optString("url");
+                                    if (!TextUtils.isEmpty(audioUrl)) {
+                                        item.formats.add(new FormatOption("Audio Stream (M4A/MP3)", audioUrl, inputUrl, "mp3", "Audio"));
+                                    }
+                                }
+                            }
+                            if (!item.formats.isEmpty()) break;
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
+            // Fallback to oEmbed metadata if title was not extracted
             if (TextUtils.isEmpty(item.title)) {
-                item.title = "YouTube Video (" + videoId + ")";
+                try {
+                    String oembedUrl = "https://www.youtube.com/oembed?url=" + inputUrl + "&format=json";
+                    String jsonStr = fetchUrlContent(oembedUrl, null);
+                    if (!TextUtils.isEmpty(jsonStr)) {
+                        JSONObject obj = new JSONObject(jsonStr);
+                        if (obj.has("title")) item.title = obj.getString("title");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
+        }
 
-            // Generate direct stream format options
-            item.formats.add(new FormatOption("720p HD (MP4)", inputUrl, "mp4", "HD"));
-            item.formats.add(new FormatOption("480p SD (MP4)", inputUrl, "mp4", "SD"));
-            item.formats.add(new FormatOption("MP3 Audio Only", inputUrl, "mp3", "Audio"));
-        } else {
-            item.title = "YouTube Video";
+        if (item.formats.isEmpty()) {
+            item.title = TextUtils.isEmpty(item.title) ? "YouTube Video (" + videoId + ")" : item.title;
             item.formats.add(new FormatOption("720p HD Stream (MP4)", inputUrl, "mp4", "HD"));
             item.formats.add(new FormatOption("MP3 Audio Stream", inputUrl, "mp3", "Audio"));
         }

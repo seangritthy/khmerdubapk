@@ -1,5 +1,9 @@
 # KhmerDub - Release Notes
 
+## Version 1.0.2
+- **Direct Stream Extraction Engine**: Integrated Invidious API stream resolution directly in `VideoExtractor.java` so videos download natively at full speed on all Android devices without requiring Python.
+- **Improved Downloader Reliability**: Direct video stream link extraction for YouTube 1080p, 720p HD, 480p SD, and M4A Audio streams.
+
 ## Version 1.0.1
 - **AI Voice Dubbing Studio**: Full mobile dubbing studio UI with Edge TTS voices (km-KH-PisethNeural, km-KH-SreymomNeural), Radio DJ Ducking controls, and Battambang font subtitles.
 - **Enhanced In-App Updater**: Automatic GitHub Release CDN checker with 1-click update installation.
